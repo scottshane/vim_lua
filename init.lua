@@ -1,5 +1,5 @@
 require "colorscheme"
-require "options.options"
-require "keymaps.keymaps"
-require "plugins.plugins"
+require "options"
+require "keymaps"
+require "plugins"
 require "treesitter"

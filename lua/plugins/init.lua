@@ -51,16 +51,22 @@ return require('packer').startup(function(use)
     config = function()
       require('lualine').setup{
         options = {
-          theme='nord',
+          theme='onedark',
           icons_enabled = true,
         }
       }
     end
   }
  --colorschemes
- use "mhartington/oceanic-next"
- -- use "arcticicestudio/nord-vim"
- use "shaunsingh/nord.nvim"
+use "shaunsingh/nord.nvim"
+use 'navarasu/onedark.nvim'
+ -- comments
+use {
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end
+}
 
 --file tree
 use {
