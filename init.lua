@@ -1,0 +1,5 @@
+require "colorscheme"
+require "options.options"
+require "keymaps.keymaps"
+require "plugins.plugins"
+require "treesitter"
