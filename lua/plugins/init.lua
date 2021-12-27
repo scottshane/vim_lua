@@ -15,7 +15,7 @@ vim.cmd [[
 
 --use a protected call so we dont error out on first use
 local status_ok, packer = pcall(require, "packer")
-if not status_ok then 
+if not status_ok then
   return
 end
 
@@ -31,35 +31,48 @@ packer.init {
 
 return require('packer').startup(function(use)
  --plugins here
- use "neovim/nvim-lspconfig"
+use 'neovim/nvim-lspconfig'
+use 'hrsh7th/cmp-nvim-lsp'
+use 'hrsh7th/cmp-buffer'
+use 'hrsh7th/cmp-path'
+use 'hrsh7th/cmp-cmdline'
+use 'hrsh7th/nvim-cmp'
+
+-- For luasnip users.
+use 'L3MON4D3/LuaSnip'
+use 'saadparwaiz1/cmp_luasnip'
+
+
  use "wbthomason/packer.nvim" --packer self-management
  use "nvim-lua/popup.nvim" --Popup api implementation from Vim
- use "nvim-lua/plenary.nvim" --lua function used in plugins
+
+ -- use "nvim-lua/plenary.nvim" --lua function used in plugins
  use "cohama/lexima.vim" --looking for better replacement for 'jiangmiao/auto-pairs'
  --  use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
  use "tpope/vim-fugitive" --git
  use "tpope/vim-surround" -- surround alters to try "blackCauldron7/surround.nvim"
--- cmp plugins
-  use "hrsh7th/nvim-cmp" -- The completion plugin
-  use "hrsh7th/cmp-buffer" -- buffer completions
-  use "hrsh7th/cmp-path" -- path completions
-  use "hrsh7th/cmp-cmdline" -- cmdline completions
--- status line   
- use {
+  -- snippets
+  use "rafamadriz/friendly-snippets" --a bunch of snippets to use
+
+  use {
   'hoob3rt/lualine.nvim',
     requires = {'kyazdani42/nvim-web-devicons', opt = true},
     config = function()
-      require('lualine').setup{
+      require('lualine').setup {
         options = {
-          theme='onedark',
-          icons_enabled = true,
+          theme = 'onedark',
+          icons_enabled = true
         }
       }
     end
-  }
+    }
+
+
  --colorschemes
 use "shaunsingh/nord.nvim"
 use 'navarasu/onedark.nvim'
+-- use "rebelot/kanagawa.nvim"
+
  -- comments
 use {
     'numToStr/Comment.nvim',
@@ -95,9 +108,19 @@ use {
       }
     } end
 }
---Telescope
- use "nvim-telescope/telescope.nvim"
 
+--ripgrep
+use "jremmen/vim-ripgrep"
+
+--Telescope
+use {
+  "nvim-telescope/telescope.nvim",
+  requires = { {'nvim-lua/plenary.nvim'} }
+}
+use {
+  'nvim-telescope/telescope-fzf-native.nvim',
+  run = 'make'
+}
 --Treesitter
  use {
   "nvim-treesitter/nvim-treesitter",

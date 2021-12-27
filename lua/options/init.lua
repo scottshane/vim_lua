@@ -1,8 +1,8 @@
 local options = {
 	backup = false,
 	clipboard = "unnamedplus",
-	-- cmdheight = 1,
-	completeopt = {"menuone", "noselect"},
+	completeopt = {"menuone","noinsert", "noselect"},
+  cmdheight = 1,
 	conceallevel = 0,
 	fileencoding = "utf-8",
   hidden = true,
@@ -17,21 +17,26 @@ local options = {
 	undofile = true,
 	--updatetime = 1000, 
 	writebackup = false,
-	expandtab=true,
-	shiftwidth=2,
-	tabstop=2,
-	cursorline =false,
-	number = true,
+	expandtab = true,
+	shiftwidth = 2,
+	tabstop = 2,
+	cursorline = true,
+	number=true,
 	relativenumber = true,
 	signcolumn = "yes",
 	scrolloff = 8,
 	sidescrolloff = 8,
+  termguicolors = true,
+  showtabline = 0 
 }
+--[[
 
-vim.opt.shortmess:append "c"
-vim.opt.formatoptions:remove("c")
-vim.opt.formatoptions:remove("r")
-vim.opt.formatoptions:remove("w")
+primagean match strategy 
+g.completion_matching_strategy_list [ 'exact', 'substring', 'fuzzy' ]
+]]
+vim.opt.formatoptions:remove "c" 
+vim.opt.formatoptions:remove "r" 
+vim.opt.formatoptions:remove "w" 
 
 for k,v in pairs(options) do
 	vim.opt[k] = v
