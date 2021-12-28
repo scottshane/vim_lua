@@ -10,7 +10,7 @@ if not snip_status_ok then
   return
 end
 
--- require("luasnip/loaders/from_vscode").lazy_load()
+require("luasnip/loaders/from_vscode").lazy_load()
 
 --[[ local check_backspace= function()
   local col = vim.fn.col "." - 1
@@ -25,6 +25,7 @@ end
 cmp.setup {
   snippet= {
     expand= function(args)
+      print(args)
       luasnip.lsp_expand(args.body)
     end,
   },
@@ -61,7 +62,7 @@ cmp.setup {
     behavior= cmp.ConfirmBehavior.Replace,
     select= false
   },
-  -- documentation= { border= {"╭", "─", "╮", "│", "╯", "─", "╰", "│"} },
+  documentation= { border= {"╭", "─", "╮", "│", "╯", "─", "╰", "│"} },
   experimaental= {
     ghost_text= false,
     native_menu= false,

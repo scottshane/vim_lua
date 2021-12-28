@@ -42,8 +42,11 @@ use 'hrsh7th/nvim-cmp'
 use 'L3MON4D3/LuaSnip'
 use 'saadparwaiz1/cmp_luasnip'
 
+--formatter
+use "jose-elias-alvarez/null-ls.nvim"
+use "jose-elias-alvarez/nvim-lsp-ts-utils"
 
- use "wbthomason/packer.nvim" --packer self-management
+use "wbthomason/packer.nvim" --packer self-management
  use "nvim-lua/popup.nvim" --Popup api implementation from Vim
 
  -- use "nvim-lua/plenary.nvim" --lua function used in plugins
