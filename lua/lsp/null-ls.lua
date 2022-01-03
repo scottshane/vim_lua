@@ -2,6 +2,8 @@ local null_ls_ok, null_ls = pcall(require, "null_ls")
 if not null_ls_ok then
   return
 end
+local test_rename = "testing"
+print(test_rename)
 
 local formmatting = null_ls.builtins.formmatting
 local diagnostics = null_ls.builtins.diagnostics

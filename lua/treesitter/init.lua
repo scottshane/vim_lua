@@ -1,5 +1,6 @@
 local status_ok, treesitter  = pcall(require, "nvim-treesitter.configs")
 if not status_ok then
+  print("treesitter config failed to load")
   return
 end
 
@@ -13,8 +14,8 @@ treesitter.setup{
     additional_vim_regex_highlighting= true,
   },
   indent = {
-    enabled = true, 
-    disable = {"yaml"} 
+    enabled = true,
+    disable = {"yaml"}
   },
   context_commentstring = {
     enable = true,
