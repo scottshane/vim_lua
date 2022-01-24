@@ -32,6 +32,8 @@ local options = {
   wildmode = "longest:full,full",
 }
 
+vim.opt.guifont = "SauceCodePro Nerd Font Regular:h11"
+
 --[[
   """"""""""""""""""""""""""""""""""""""""""""""""""
   " VimWiki 
@@ -72,9 +74,10 @@ vim.g.vim_vimwiki_conceal_code_blocks = 0
 primagean match strategy 
 g.completion_matching_strategy_list [ 'exact', 'substring', 'fuzzy' ]
 ]]
-vim.opt.formatoptions:remove "c"
-vim.opt.formatoptions:remove "r"
-vim.opt.formatoptions:remove "w"
+vim.cmd "set formatoptions-=cro"
+-- vim.opt.formatoptions:remove "c"
+-- vim.opt.formatoptions:remove "r"
+-- vim.opt.formatoptions:remove "o"
 
 for k, v in pairs(options) do
   vim.opt[k] = v

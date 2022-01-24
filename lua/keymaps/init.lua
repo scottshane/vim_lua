@@ -53,4 +53,4 @@ keymap(
 )
 keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
 
-keymap("n", "<leader>tr", ":split | terminal<CR>", opts)
+keymap("n", "<leader>4", ":split | terminal<CR>", opts)

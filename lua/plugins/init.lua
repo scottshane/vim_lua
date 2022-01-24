@@ -46,20 +46,18 @@ return packer.startup {
     use "saadparwaiz1/cmp_luasnip"
     use "L3MON4D3/LuaSnip"
     use "rafamadriz/friendly-snippets" --a bunch of snippets to use
-    -- snippets
-    --formatter
-    use "jose-elias-alvarez/null-ls.nvim"
-    use "jose-elias-alvarez/nvim-lsp-ts-utils"
+    use "kyazdani42/nvim-web-devicons"
 
     use "ckipp01/stylua-nvim" --stylua formatter
     use "wbthomason/packer.nvim" --packer self-management
     use "nvim-lua/popup.nvim" --Popup api implementation from Vim
 
-    -- use "nvim-lua/plenary.nvim" --lua function used in plugins
+    use "nvim-lua/plenary.nvim" --lua function used in plugins
     use "cohama/lexima.vim" --looking for better replacement for 'jiangmiao/auto-pairs'
     --  use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
     use "tpope/vim-fugitive" --git
     use "tpope/vim-surround" -- surround alters to try "blackCauldron7/surround.nvim"
+    use "tpope/vim-scriptease" -- debugging
 
     use {
       "hoob3rt/lualine.nvim",
@@ -73,7 +71,6 @@ return packer.startup {
         }
       end,
     }
-
     --colorschemes
     use "shaunsingh/nord.nvim"
     use "navarasu/onedark.nvim"
@@ -86,6 +83,18 @@ return packer.startup {
         require("Comment").setup()
       end,
     }
+
+    --formatter
+    use {
+      "jose-elias-alvarez/null-ls.nvim",
+      config = function()
+        require("null-ls").setup()
+      end,
+      requires = { "nvim-lua/plenary.nvim" },
+    }
+
+    -- use "jose-elias-alvarez/null-ls.nvim"
+    use "jose-elias-alvarez/nvim-lsp-ts-utils"
 
     --file tree
     use {
@@ -116,6 +125,7 @@ return packer.startup {
       end,
     }
 
+    use "b0o/schemastore.nvim" --lsp
     --ripgrep
     use "jremmen/vim-ripgrep"
 

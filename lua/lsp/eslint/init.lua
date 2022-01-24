@@ -17,9 +17,9 @@ local M = {
         "markdown",
         "pandoc",
       },
-      root_dir = lspconfig.util.root_pattern(".eslintrc", ".eslintrc.js"),
+      root_dir = lspconfig.util.root_pattern(".eslintrc", ".eslintrc.js", "package.json"),
       on_attach = function(client, bufnr)
-        print "on_attach function definitions"
+        vim.cmd "echo on_attach function definitions"
         client.resolved_capabilities.document_formatting = true
         on_attach(client, bufnr)
       end,
@@ -28,6 +28,12 @@ local M = {
         codeActionOnSave = {
           enable = true,
           mode = "all",
+        },
+        debug = false,
+        log = {
+          enable = false,
+          level = "trace",
+          use_console = "sync",
         },
         format = {
           enable = true,

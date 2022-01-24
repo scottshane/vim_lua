@@ -1,7 +1,15 @@
+--[[
+--NOT USING TEMPORARLY TS Settup is in lsp/init.lua
+]]
 local u = require "utils"
 
 local ts_utils_settings = {
-  --debug = true,
+  debug = false,
+  log = {
+    enable = false,
+    level = "trace",
+    use_console = "sync",
+  },
   import_all_scan_buffers = 100,
   update_imports_on_move = true,
   filter_out_diagnostics_by_code = { 80001 },
@@ -10,7 +18,6 @@ local ts_utils_settings = {
 local M = {}
 
 M.setup = function(on_attach, capabilities)
-  vim.cmd "echo 'TS LSP'"
   local lspconfig = require "lspconfig"
   local ts_utils = require "nvim-lsp-ts-utils"
 
@@ -18,6 +25,8 @@ M.setup = function(on_attach, capabilities)
     root_dir = lspconfig.util.root_pattern "package.json",
     init_options = ts_utils.init_options,
     on_attach = function(client, bufnr)
+      client.resolved_capabilities.document_formatting = false
+      client.resolved_capabilities.document_range_formatting = false
       on_attach(client, bufnr)
 
       ts_utils.setup(ts_utils_settings)
