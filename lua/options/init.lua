@@ -5,7 +5,7 @@ local options = {
   clipboard = "unnamedplus",
   completeopt = { "menuone", "noinsert", "noselect" },
   conceallevel = 0,
-  cursorline = true,
+  cursorline = false,
   expandtab = true,
   fileencoding = "utf-8",
   mouse = "a",
@@ -36,7 +36,7 @@ vim.opt.guifont = "SauceCodePro Nerd Font Regular:h11"
 
 --[[
   """"""""""""""""""""""""""""""""""""""""""""""""""
-  " VimWiki 
+  " VimWiki
   """""""""""""""""""""""""""""""""""""""""""""""""
 ]]
 vim.g.vimwiki_list = {
@@ -71,14 +71,14 @@ vim.g.vimwiki_conceal_onechar_markers = 0
 vim.g.vim_vimwiki_conceal_code_blocks = 0
 
 --[[
-primagean match strategy 
+primagean match strategy
 g.completion_matching_strategy_list [ 'exact', 'substring', 'fuzzy' ]
 ]]
-vim.cmd "set formatoptions-=cro"
--- vim.opt.formatoptions:remove "c"
--- vim.opt.formatoptions:remove "r"
--- vim.opt.formatoptions:remove "o"
-
+--vim.cmd "set formatoptions-=cro"
+--default format options "tcqj"
+vim.opt.formatoptions:remove "c"
+vim.opt.formatoptions:remove "r"
+vim.opt.formatoptions:remove "o"
 for k, v in pairs(options) do
   vim.opt[k] = v
 end

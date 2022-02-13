@@ -1,6 +1,13 @@
 --[[ Plugins ]]
 local fn = vim.fn
 local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+
+-- returns the require for use in `config` parameter of packer's use
+-- expects the name of the config file
+function get_config(name)
+  return string.format('require("config/%s")', name)
+end
+
 if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system {
     "git",
@@ -11,27 +18,19 @@ if fn.empty(fn.glob(install_path)) > 0 then
     install_path,
   }
 end
-
---Autocommand reloads nvim whenever plugins.lua is saved
-vim.cmd [[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync 
-  augroup end
-]]
-
-vim.cmd [[
-  augroup stylua_format_on_save
-    autocmd!
-    autocmd BufWritePost *.lua lua require("stylua-nvim").format_file()
-  augroup end
-]]
 --use a protected call so we dont error out on first use
 local status_ok, packer = pcall(require, "packer")
 if not status_ok then
   return
 end
+--[[
+--Plugins to try
+"akinsho/nvim-toggleterm.lua", -- toggle terminal
+"folke/todo-comments.nvim" -- I think HL for todos:
+"ahmedkhalf/project.nvim" -- someone finally solved Packages?
+rcarriga/nvim-notify --?
 
+]]
 return packer.startup {
   function(use)
     --plugins here
@@ -58,7 +57,6 @@ return packer.startup {
     use "tpope/vim-fugitive" --git
     use "tpope/vim-surround" -- surround alters to try "blackCauldron7/surround.nvim"
     use "tpope/vim-scriptease" -- debugging
-
     use {
       "hoob3rt/lualine.nvim",
       requires = { "kyazdani42/nvim-web-devicons", opt = true },
@@ -132,12 +130,12 @@ return packer.startup {
     --Telescope
     use {
       "nvim-telescope/telescope.nvim",
-      requires = { { "nvim-lua/plenary.nvim" } },
+      requires = { "nvim-lua/plenary.nvim", { "nvim-telescope/telescope-fzf-native.nvim", run = "make" } },
+      config = require "../telescopeconfig",
     }
-    use {
-      "nvim-telescope/telescope-fzf-native.nvim",
-      run = "make",
-    }
+
+    use "nvim-telescope/telescope-file-browser.nvim"
+
     --Treesitter
     use {
       "nvim-treesitter/nvim-treesitter",

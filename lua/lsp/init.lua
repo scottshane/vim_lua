@@ -1,4 +1,13 @@
-local u = require "utils"
+--[[
+DEBUGGING: -u minimal
+local status_u_ok, u = pcall(require, "../utils")
+]]
+
+local status_u_ok, u = pcall(require, "utils"           )
+if not status_u_ok then
+  print "utils require failed in lsp.init"
+  return
+end
 
 local status_ok, lsp = pcall(require, "lspconfig")
 if not status_ok then
@@ -56,6 +65,7 @@ vim.diagnostic.config(config)
 
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, border_opts)
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, border_opts)
+vim.lsp.handlers["textDocument/codeAction"] = vim.lsp.with(vim.lsp.handlers.code_action, border_opts)
 
 local preferred_formatting_clients = { "eslint_d", "prettierd" }
 local fallback_formatting_client = "null-ls"
@@ -118,8 +128,9 @@ local on_attach = function(client, bufnr)
   u.lua_command("LspReferences", "vim.lsp.buf.references()")
   u.lua_command("LspDiagLocList", "vim.lsp.diagnostic.set_loclist()")
   u.lua_command("LspShowLineDiag", "vim.lsp.diagnostic.show_line_diagnostics()")
+  u.lua_command("LspCodeActions", "vim.lsp.buf.code_action()")
   --binding
-  u.buf_map(bufnr, "n", "<leader>f", ":LspFormatting<CR>")
+  u.buf_map(bufnr, "n", "<leader>fm", ":LspFormatting<CR>")
   u.buf_map(bufnr, "n", "<leader>rn", ":LspRename<CR>")
   u.buf_map(bufnr, "n", "K", ":LspHover<CR>")
   u.buf_map(bufnr, "n", "<leader>D", ":LspTypeDef<CR>")
@@ -133,13 +144,8 @@ local on_attach = function(client, bufnr)
   u.buf_map(bufnr, "n", "gr", ":LspReferences<CR>")
   u.buf_map(bufnr, "n", "<leader>q", ":LspDiagLocList<CR>")
   u.buf_map(bufnr, "n", "<leader>ln", ":LspShowLineDiag<CR>")
+  u.buf_map(bufnr, "n", "<leader>ca", ":LspCodeActions<CR>")
 
-  --[[ MOVE TO TELESCOPE COMNFIG
-  map("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", mapopts)
-  map("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", mapopts)
-  map("n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", mapopts)
-  map("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", mapopts)
-  ]]
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -160,6 +166,7 @@ for _, ls in ipairs(servers) do
   lsp[ls].setup(pmg_config())
 end
 
+--json
 lsp["jsonls"].setup {
   settings = {
     json = {
@@ -170,6 +177,10 @@ lsp["jsonls"].setup {
   capabilities = capabilities,
 }
 
+--lua
+require("lsp.sumneko_lua").setup(on_attach, capabilities)
+
+--Typescript Server
 lsp["tsserver"].setup {
   init_options = require("nvim-lsp-ts-utils").init_options,
   on_attach = function(client, bufnr)
@@ -179,6 +190,13 @@ lsp["tsserver"].setup {
     ts_utils.setup {
       debug = false,
       disable_commands = false,
+      --eslint
+      eslint_enable_code_actions = true,
+      eslint_enable_disable_comments = true,
+      eslint_bin = "eslint",
+      eslint_config_fallback = nil,
+      eslint_enable_diagnostics = true,
+
       enable_import_on_completion = false,
       import_all_timeout = 5000,
       import_all_priorities = {
@@ -193,6 +211,8 @@ lsp["tsserver"].setup {
       filter_out_diagnostics_by_code = { 80001 },
       auto_inlay_hints = true,
       inlay_hints_highlight = "Comment",
+
+      --update imports on file move
       update_imports_on_move = false,
       require_confirmation_on_move = false,
       watch_dir = nil,
@@ -203,15 +223,24 @@ lsp["tsserver"].setup {
   end,
   capabilities = capabilities,
 }
---lua
-require("lsp.sumneko_lua").setup(on_attach, capabilities)
 
+--Null-ls
 local null_ls = require "null-ls"
 null_ls.setup {
   sources = {
-    null_ls.builtins.diagnostics.eslint_d.with { diagnostics_format = "[#{c}] #{m} (#{s})" },
-    null_ls.builtins.code_actions.eslint_d,
-    null_ls.builtins.formatting.prettierd.with({disable_filetypes = {"json"}}),
+    null_ls.builtins.diagnostics.eslint.with {
+      debug = true,
+      prefer_local = "./node_modules/.bin/eslint",
+      log = { level = "error", enable = true, use_console = "async" },
+      diagnostics_format = "#{m} #{s}(#{c})",
+    },
+    null_ls.builtins.code_actions.eslint.with {
+      debounce = 150,
+      debug = true,
+      -- log = { level = "error", enable = true, use_console = "async" },
+      prefer_local = "./node_modules/.bin/eslint",
+    },
+    null_ls.builtins.formatting.prettierd.with { disabled_filetypes = { "json" } },
   },
   on_attach = function(client, bufnr)
     if client.resolved_capabilities.document_formatting then
@@ -222,10 +251,10 @@ null_ls.setup {
 }
 
 -- supress lsp notifications
-local notify = vim.notify
-vim.notify = function(msg, ...)
-  if msg:match "%[lspconfig%]" then
-    return
-  end
-  notify(msg, ...)
-end
+-- local notify = vim.notify
+-- vim.notify = function(msg, ...)
+--   if msg:match "%[lspconfig%]" then
+--     return
+--   end
+--   notify(msg, ...)
+-- end
