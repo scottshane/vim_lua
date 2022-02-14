@@ -130,10 +130,10 @@ return packer.startup {
     --Telescope
     use {
       "nvim-telescope/telescope.nvim",
-      requires = { "nvim-lua/plenary.nvim", { "nvim-telescope/telescope-fzf-native.nvim", run = "make" } },
-      config = require "../telescopeconfig",
+      requires = { { "nvim-lua/plenary.nvim" } },
+      config = function() require "../telescopeconfig.init" end
     }
-
+    use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
     use "nvim-telescope/telescope-file-browser.nvim"
 
     --Treesitter

@@ -46,7 +46,7 @@ keymap("n", "<leader>e", ":Telescope file_browser theme=ivy<CR>", opts)
 --telescope remap
 keymap(
   "n",
-  "<leader>f",
+  "<leader>ff",
   "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_ivy())<cr>",
   opts
 )
@@ -58,7 +58,5 @@ keymap(
   opts
 )
 keymap("n", "<leader>h", "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
-
 keymap("n", "<leader>4", ":split | terminal<CR>", opts)
-
 keymap("n", "<leader>sh", ":set hls!<CR>", opts)
