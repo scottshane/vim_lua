@@ -3,7 +3,7 @@ DEBUGGING: -u minimal
 local status_u_ok, u = pcall(require, "../utils")
 ]]
 
-local status_u_ok, u = pcall(require, "utils"           )
+local status_u_ok, u = pcall(require, "utils")
 if not status_u_ok then
   print "utils require failed in lsp.init"
   return
@@ -145,7 +145,6 @@ local on_attach = function(client, bufnr)
   u.buf_map(bufnr, "n", "<leader>q", ":LspDiagLocList<CR>")
   u.buf_map(bufnr, "n", "<leader>ln", ":LspShowLineDiag<CR>")
   u.buf_map(bufnr, "n", "<leader>ca", ":LspCodeActions<CR>")
-
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -209,7 +208,7 @@ lsp["tsserver"].setup {
       import_all_select_source = false,
       filter_out_diagnostics_by_serverity = {},
       filter_out_diagnostics_by_code = { 80001 },
-      auto_inlay_hints = true,
+      auto_inlay_hints = false,
       inlay_hints_highlight = "Comment",
 
       --update imports on file move

@@ -4,7 +4,7 @@ local telescope = require "telescope"
 
 telescope.setup {
   defaults = {
-    file_ignore_pattern = { "node_modules", "%.jpg", "%.png", "%.gif" },
+    file_ignore_pattern = { "node_modules", "%.ico", "%.jpg", "%.png", "%.gif" },
     mappings = {
       i = {
         -- Close on first esc instead of gonig to normal mode
@@ -34,12 +34,19 @@ telescope.setup {
   pickers = {
     find_files = {
       theme = "ivy",
+      cwd_to_path = true
     },
     live_grep = {
       theme = "ivy",
     },
+    buffers = {
+      theme = "ivy",
+    },
   },
   extensions = {
+    project = {
+      hidden_files = true
+    },
     file_browser = {
       theme = "ivy",
       mappings = {
@@ -85,6 +92,7 @@ telescope.setup {
 
 telescope.load_extension "fzf"
 telescope.load_extension "file_browser"
+telescope.load_extension "project"
 
 --[[ MOVE TO TELESCOPE COMNFIG
 --  map("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", mapopts)

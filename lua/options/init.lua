@@ -30,8 +30,9 @@ local options = {
   termguicolors = true,
   wildmenu = true,
   wildmode = "longest:full,full",
+  autoread = true,
 }
-
+vim.opt.shortmess:append("I")
 vim.opt.guifont = "SauceCodePro Nerd Font Regular:h11"
 
 --[[
