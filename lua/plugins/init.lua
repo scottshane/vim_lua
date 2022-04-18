@@ -106,7 +106,7 @@ return packer.startup {
           auto_close = false,
           open_on_tab = false,
           hijack_cursor = true,
-          update_cwd = false,
+          update_cwd = true,
           git = {
             enable = true,
             ignore = true,
@@ -141,6 +141,14 @@ return packer.startup {
     use {
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
+    }
+    --Trouble Diagnostics
+    use {
+      "folke/trouble.nvim",
+      requires = "kyazdani42/nvim-web-devicons",
+      config = function()
+        require("trouble").setup()
+      end
     }
     --GLow markdown previewer
     --requires glow bin from https://github.com/charmbracelet/glow

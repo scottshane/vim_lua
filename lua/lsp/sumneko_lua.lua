@@ -3,7 +3,7 @@ local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-local settings = {
+local settings =                {
   Lua = {
     runtime = {
       path = runtime_path,

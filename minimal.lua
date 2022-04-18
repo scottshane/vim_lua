@@ -78,14 +78,14 @@ local function load_plugins()
     {"rafamadriz/friendly-snippets" }, --a bunch of snippets to use
     {"kyazdani42/nvim-web-devicons"},
     --lua-dev
-    {"folke/lua-dev.nvim"}, 
+    {"folke/lua-dev.nvim"},
     --tPope
     { "tpope/vim-fugitive"}, --git
     { "tpope/vim-surround"}, -- surround alters to try "blackCauldron7/surround.nvim"
     { "tpope/vim-scriptease"}, -- debugging
     --stylua formatter
     { "ckipp01/stylua-nvim" },
-   --Popup api implementation from Vim 
+   --Popup api implementation from Vim
     {"nvim-lua/popup.nvim"},
     --looking for better replacement for 'jiangmiao/auto-pairs'
     {"cohama/lexima.vim"},
@@ -131,7 +131,7 @@ _G.load_config = function()
    -- require "/lua.utils"
    require "/lua.treesitter.init"
    require "./lua/lsp/init"
-  
+
 
 end
 if vim.fn.isdirectory(install_path) == 0 then

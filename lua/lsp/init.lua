@@ -77,6 +77,7 @@ local formatting = function()
   for _, client in ipairs(vim.lsp.get_active_clients()) do
     if vim.tbl_contains(preferred_formatting_clients, client.name) then
       selected_client = client
+      vim.inspect(selected_client)
       break
     end
     if client.name == fallback_formatting_client then
@@ -114,20 +115,20 @@ local on_attach = function(client, bufnr)
   end
 
   -- commands
+  u.lua_command("LspDiagPrev", "vim.diagnostic.goto_prev()")
+  u.lua_command("LspDiagNext", "vim.diagnostic.goto_next()")
+  u.lua_command("LspDiagQuickfix", "vim.diagnostic.setqflist()")
+  u.lua_command("LspDiagLocList", "vim.diagnostic.setloclist()")
+  u.lua_command("LspShowLineDiag", "vim.diagnostic.open_float()")
   u.lua_command("LspFormatting", "vim.lsp.buf.formatting()")
   u.lua_command("LspRename", "vim.lsp.buf.rename()")
   u.lua_command("LspHover", "vim.lsp.buf.hover()")
   u.lua_command("LspSignatureHelp", "vim.lsp.buf.signature_help()")
   u.lua_command("LspTypeDef", "vim.lsp.buf.type_definition()")
-  u.lua_command("LspDiagPrev", "vim.diagnostic.goto_prev()")
-  u.lua_command("LspDiagNext", "vim.diagnostic.goto_next()")
-  u.lua_command("LspDiagQuickfix", "vim.diagnostic.setqflist()")
   u.lua_command("LspDeclaration", "vim.lsp.buf.declaration()")
   u.lua_command("LspDefinition", "vim.lsp.buf.definition()")
   u.lua_command("LspImplementation", "vim.lsp.buf.implementation()")
   u.lua_command("LspReferences", "vim.lsp.buf.references()")
-  u.lua_command("LspDiagLocList", "vim.lsp.diagnostic.set_loclist()")
-  u.lua_command("LspShowLineDiag", "vim.lsp.diagnostic.show_line_diagnostics()")
   u.lua_command("LspCodeActions", "vim.lsp.buf.code_action()")
   --binding
   u.buf_map(bufnr, "n", "<leader>fm", ":LspFormatting<CR>")
@@ -160,7 +161,7 @@ local function pmg_config(_cfg)
   }, _cfg or {})
 end
 
-local servers = { "html", "cssls" }
+local servers = { "cssls" }
 for _, ls in ipairs(servers) do
   lsp[ls].setup(pmg_config())
 end
@@ -250,10 +251,10 @@ null_ls.setup {
 }
 
 -- supress lsp notifications
--- local notify = vim.notify
--- vim.notify = function(msg, ...)
---   if msg:match "%[lspconfig%]" then
---     return
---   end
---   notify(msg, ...)
--- end
+local notify = vim.notify
+vim.notify = function(msg, ...)
+  if msg:match "%[lspconfig%]" then
+    return
+  end
+  notify(msg, ...)
+end

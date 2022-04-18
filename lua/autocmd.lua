@@ -28,17 +28,20 @@ vim.api.nvim_exec(
   ]],
   false
 )
--- Prevent new line to also start with a comment
-vim.api.nvim_exec(
-  [[
-  augroup NewLineComment
-    au!
-    au FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-  augroup END
-  ]],
-  false
-)
 
+-- Stop comments on newline
+vim.cmd [[
+augroup NoCommentNewLine
+  au!
+  au BufWinEnter * :set formatoptions-=c formatoptions-=r formatoptions-=o
+augroup END
+]]
+
+-- Disable lualine on Nvim-tree
+-- vim.cmd [[
+-- au!
+-- au BufEnter,BufWinEnter,WinEnter,CmdwinEnter * if bufname('%') == "NvimTree_1" | set laststatus=0 | else | set laststatus=2 | endif]]
+--
 -- realtime update change on disk
 vim.api.nvim_exec(
   [[

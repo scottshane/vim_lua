@@ -16,15 +16,22 @@ keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 
--- move line
-keymap("n", "<M-j>", ":m .+1<CR>==", opts)
-keymap("n", "<M-k>", ":m .-2<CR>==", opts)
-
 --Resize with arrows
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
 keymap("n", "<C-Down>", ":resize +2<CR>", opts)
 keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
 keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
+
+-- Get current files name and path
+keymap("n", "<leader>pp", "1<C-g>", opts)
+
+--[[ ############### Trouble  ###############]]
+keymap("n", "<leader>xx", "<cmd>Trouble<cr>", opts)
+keymap("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>", opts)
+keymap("n", "<leader>xd", "<cmd>Trouble document_diagnostics<cr>", opts)
+keymap("n", "<leader>xl", "<cmd>Trouble loclist<cr>", opts)
+keymap("n", "<leader>xq", "<cmd>Trouble quickfix<cr>", opts)
+keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", opts)
 
 --[[ ############### Insert Mode ###############]]
 -- escape with JJ
@@ -36,22 +43,25 @@ keymap("i", "jw", "<C-o>:w<CR>", opts)
 --Stay in indent mode
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
---move line
-keymap("v", "<A-j>", ":m '>+1<CR>gv=gv", opts)
-keymap("v", "<A-k>", ":m '<-2<CR>gv=gv", opts)
-
--- Move selected line / block of text in visual mode
--- keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
--- keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
-
 --[[movement]]
 keymap("n", "j", "gj", opts)
 keymap("n", "k", "gk", opts)
 keymap("n", "gj", "j", opts)
 keymap("n", "gk", "k", opts)
--- move line
-keymap("i", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
-keymap("i", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
+-- move line [normal mode]
+keymap("n", "<leader>j", ":m .+1<CR>==", opts)
+keymap("n", "<leader>k", ":m .-2<CR>==", opts)
+-- move line [insert mode]
+--[[
+Shut up for now  Meta key also includes <esc> key this
+gets confusing sometimes. when dismissing float windows.
+
+ keymap("i", "<A-j>", "<C-o>:m .+1<CR>==gi", opts)
+ keymap("i", "<A-k>", "<C-o>:m .-2<CR>==gi", opts)
+]]
+--move line [visual mode]
+keymap("v", "<leader>j", ":m '>+1<CR>gv=gv", opts)
+keymap("v", "<leader>k", ":m '<-2<CR>gv=gv", opts)
 
 --[[############### termimal Mode ###############]]
 --remap exit terminal insert

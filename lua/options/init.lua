@@ -35,6 +35,9 @@ local options = {
 vim.opt.shortmess:append("I")
 vim.opt.guifont = "SauceCodePro Nerd Font Regular:h11"
 
+-- enable filetype.lua
+vim.g.do_filetype_lua = 1
+
 --[[
   """"""""""""""""""""""""""""""""""""""""""""""""""
   " VimWiki
@@ -72,14 +75,22 @@ vim.g.vimwiki_conceal_onechar_markers = 0
 vim.g.vim_vimwiki_conceal_code_blocks = 0
 
 --[[
+  """"""""""""""""""""""""""""""""""""""""""""""""""
+  " Nvim-Tree
+  """""""""""""""""""""""""""""""""""""""""""""""""
+]]
+vim.g.nvim_tree_respect_buf_cwd = 1
+
+--[[
 primagean match strategy
 g.completion_matching_strategy_list [ 'exact', 'substring', 'fuzzy' ]
 ]]
 --vim.cmd "set formatoptions-=cro"
 --default format options "tcqj"
-vim.opt.formatoptions:remove "c"
-vim.opt.formatoptions:remove "r"
-vim.opt.formatoptions:remove "o"
+-- vim.opt.formatoptions:remove "c"
+-- vim.opt.formatoptions:remove "r"
+-- vim.opt.formatoptions:remove "o"
+
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
