@@ -1,6 +1,7 @@
 --[[
 --NOT USING TEMPORARLY TS Settup is in lsp/init.lua
 ]]
+
 local u = require "utils"
 
 local ts_utils_settings = {

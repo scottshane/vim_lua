@@ -240,7 +240,7 @@ null_ls.setup {
       -- log = { level = "error", enable = true, use_console = "async" },
       prefer_local = "./node_modules/.bin/eslint",
     },
-    null_ls.builtins.formatting.prettierd.with { disabled_filetypes = { "json" } },
+    null_ls.builtins.formatting.prettierd.with { disabled_filetypes = { "json", "jsonc" } },
   },
   on_attach = function(client, bufnr)
     if client.resolved_capabilities.document_formatting then
