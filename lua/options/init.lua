@@ -7,6 +7,7 @@ local options = {
   conceallevel = 0,
   cursorline = false,
   expandtab = true,
+  hlsearch = false,
   fileencoding = "utf-8",
   mouse = "a",
   number = true,
